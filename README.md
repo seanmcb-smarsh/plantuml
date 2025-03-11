@@ -14,8 +14,8 @@ sequenceDiagram
     participant revoke as TopicPartitionTracker.on_revoke
     participant kafka as Kafka Broker
 
-    consumer->>poll: Check for messages
-    poll->>consumer: Download messages
+    consumer ->> poll: Check for messages
+    poll ->> consumer: Download messages
     consumer ->> processor: Process messages and create output
     consumer ->> pause_consumer: Pause message consumption from poll
     consumer ->> poll: Continuously check for a rebalance
@@ -26,8 +26,9 @@ sequenceDiagram
     assign ->> counter: Increment on_assign counter
     processor ->> producer: Produce output and commit offsets
     producer ->> commit: Commit offsets
-    commit ->> counter: Check on_assign counter
-    commit ->> commit: Repeart and wait for on_assign counter to reach 2
+    loop Block and wait for on_assign counter to reach 2
+       commit ->> counter: Check on_assign counter
+    end
     kafka ->> assign: Provide new generation id
     assign ->> counter: Increment on_assign counter
     commit ->> kafka: Commit offsets

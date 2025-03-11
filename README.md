@@ -1,6 +1,6 @@
 # plantuml
 plantuml test
-
+<div hidden>
 ```plantuml
 @startuml
 participant "IPicoserivce.ConsumeProduce.KafkaConsumer" as consumer
@@ -34,3 +34,4 @@ assign -> counter: Increment on_assign counter
 commit -> kafka: Commit offsets
 @enduml
 ```
+</div>
